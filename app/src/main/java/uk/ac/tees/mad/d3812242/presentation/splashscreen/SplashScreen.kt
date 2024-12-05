@@ -16,6 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -26,13 +28,16 @@ import uk.ac.tees.mad.d3812242.R
 @Composable
 @Preview(showBackground = true)
 fun SplashScreen(){
+    val poppinsFontFamily= FontFamily(
+        Font(resId = R.font.poppins_semibold, weight = FontWeight.Bold)
+    )
 Column (modifier = Modifier
     .fillMaxSize()
     .background(color = (colorResource(id = R.color.vividOrange)))
     , horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
 
-        Image(painter = painterResource(id = R.drawable.logo), contentDescription =null, modifier = Modifier.size(95.dp,95.dp))
-    Text(text = "Cook Book", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Image(painter = painterResource(id = R.drawable.logo), contentDescription =null, modifier = Modifier.size(100.dp,100.dp))
+    Text(text = "Cook Book", fontSize = 30.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = poppinsFontFamily)
 
 
 
