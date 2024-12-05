@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,13 +37,16 @@ import uk.ac.tees.mad.d3812242.R
 @Preview(showBackground = true)
 fun OnBoardingScreen(){
 Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+    var poppinsFontFamily = FontFamily(
+        Font(resId =R.font.poppins_semibold,weight=FontWeight.Bold)
+    )
     Row (modifier = Modifier
         .fillMaxWidth()
         .padding(top = 15.dp, end = 20.dp), horizontalArrangement = Arrangement.End){
         Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(
             id = R.color.culturedWhite
         ), contentColor = Color.Gray), shape = RoundedCornerShape(8.dp), modifier = Modifier.size(75.dp,38.dp)) {
-            Text(text = "Skip", fontSize = 10.sp)
+            Text(text = "Skip", fontSize = 10.sp, fontFamily = poppinsFontFamily)
             
         }
     }
@@ -52,9 +57,9 @@ Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.Center
     }
     Spacer(modifier = Modifier.height(25.dp))
     Column (modifier = Modifier.padding(all = 30.dp), horizontalAlignment = Alignment.CenterHorizontally){
-        Text(text = "Thousands of tested recipes", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+        Text(text = "Thousands of tested recipes", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, fontFamily = poppinsFontFamily)
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "There is no need to fear failure. Tested recipes are guaranteed to work by our professional chefs.", fontSize = 14.sp, color = Color.Gray)
+        Text(text = "There is no need to fear failure. Tested recipes are guaranteed to work by our professional chefs.", fontSize = 14.sp, color = Color.Gray, fontFamily = poppinsFontFamily)
 
     }
     Spacer(modifier = Modifier.height(120.dp))
@@ -90,7 +95,7 @@ Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.Center
     Button(onClick = { }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(
         id = R.color.amberOrange), contentColor = colorResource(id = R.color.white)), modifier = Modifier.size(width = 327.dp, height = 52.dp), shape = RoundedCornerShape(6.dp)
     ) {
-        Text(text = "Get Start", fontSize = 14.sp, fontWeight = FontWeight.Medium)
+        Text(text = "Get Start", fontSize = 14.sp, fontWeight = FontWeight.Medium, fontFamily = poppinsFontFamily)
 
     }
     }
