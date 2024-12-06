@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("plugin.serialization") version "2.0.20"
+
 }
 
 android {
@@ -69,8 +71,14 @@ dependencies {
 
     // google fonts
     implementation ("androidx.compose.ui:ui-text-google-fonts:1.7.5")
-
     implementation ("com.google.accompanist:accompanist-flowlayout:0.36.0")
+
+    //navigation
+    implementation("androidx.navigation:navigation-compose:2.8.0-beta05")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+
+
 
 
 }

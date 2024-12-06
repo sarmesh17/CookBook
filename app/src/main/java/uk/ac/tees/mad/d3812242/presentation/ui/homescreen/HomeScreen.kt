@@ -160,7 +160,7 @@ fun HomeScreen() {
                 }
             }
 
-
+            //categories section
             CategoriesRow(categories)
 
 
