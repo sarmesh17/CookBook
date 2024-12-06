@@ -1,4 +1,4 @@
-package uk.ac.tees.mad.d3812242.presentation.createaccountscreen
+package uk.ac.tees.mad.d3812242.presentation.ui.createaccountscreen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
