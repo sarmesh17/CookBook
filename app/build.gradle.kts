@@ -77,6 +77,13 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.0-beta05")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
+    // preference data store
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+
+
+
+
 
 
 
