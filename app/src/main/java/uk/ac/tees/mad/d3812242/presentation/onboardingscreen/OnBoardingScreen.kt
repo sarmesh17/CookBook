@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,34 +36,59 @@ import uk.ac.tees.mad.d3812242.R
 
 @Composable
 @Preview(showBackground = true)
-fun OnBoardingScreen(){
-Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-    var poppinsFontFamily = FontFamily(
-        Font(resId =R.font.poppins_semibold,weight=FontWeight.Bold)
-    )
-    Row (modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 15.dp, end = 20.dp), horizontalArrangement = Arrangement.End){
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(
-            id = R.color.culturedWhite
-        ), contentColor = Color.Gray), shape = RoundedCornerShape(8.dp), modifier = Modifier.size(75.dp,38.dp)) {
-            Text(text = "Skip", fontSize = 10.sp, fontFamily = poppinsFontFamily)
-            
+fun OnBoardingScreen() {
+
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+        val poppinsFontFamily = FontFamily(
+            Font(resId = R.font.poppins_semibold, weight = FontWeight.Bold)
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp, end = 20.dp), horizontalArrangement = Arrangement.End
+        ) {
+            Button(
+                onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(
+                        id = R.color.culturedWhite
+                    ), contentColor = Color.Gray,
+                ), shape = RoundedCornerShape(8.dp), modifier = Modifier.size(75.dp, 38.dp)
+            ) {
+                Text(text = "Skip", fontSize = 10.sp, fontFamily = poppinsFontFamily)
+
+            }
         }
-    }
-    Spacer(modifier = Modifier.height(200.dp))
-    Box (modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
-        Image(painter = painterResource(id = R.drawable.illustration), contentDescription =null, modifier = Modifier.size(260.dp,164.dp) )
+        Spacer(modifier = Modifier.height(200.dp))
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Image(
+                painter = painterResource(id = R.drawable.illustration),
+                contentDescription = null,
+                modifier = Modifier.size(260.dp, 164.dp)
+            )
 
-    }
-    Spacer(modifier = Modifier.height(25.dp))
-    Column (modifier = Modifier.padding(all = 30.dp), horizontalAlignment = Alignment.CenterHorizontally){
-        Text(text = "Thousands of tested recipes", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, fontFamily = poppinsFontFamily)
-        Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "There is no need to fear failure. Tested recipes are guaranteed to work by our professional chefs.", fontSize = 14.sp, color = Color.Gray, fontFamily = poppinsFontFamily)
+        }
+        Spacer(modifier = Modifier.height(25.dp))
+        Column(
+            modifier = Modifier.padding(all = 30.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Thousands of tested recipes",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = poppinsFontFamily
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            Text(
+                text = "There is no need to fear failure. Tested recipes are guaranteed to work by our professional chefs.",
+                fontSize = 14.sp,
+                color = Color.Gray,
+                fontFamily = poppinsFontFamily,
+                textAlign = TextAlign.Center
+            )
 
-    }
-    Spacer(modifier = Modifier.height(120.dp))
+        }
+        Spacer(modifier = Modifier.height(120.dp))
         Row(
             modifier = Modifier
                 .padding(16.dp),
@@ -91,15 +117,26 @@ Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.Center
                     )
             )
         }
-    Spacer(modifier = Modifier.height(35.dp))
-    Button(onClick = { }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(
-        id = R.color.amberOrange), contentColor = colorResource(id = R.color.white)), modifier = Modifier.size(width = 327.dp, height = 52.dp), shape = RoundedCornerShape(6.dp)
-    ) {
-        Text(text = "Get Start", fontSize = 14.sp, fontWeight = FontWeight.Medium, fontFamily = poppinsFontFamily)
+        Spacer(modifier = Modifier.height(35.dp))
+        Button(
+            onClick = { },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(
+                    id = R.color.amberOrange
+                ), contentColor = colorResource(id = R.color.white)
+            ),
+            modifier = Modifier.size(width = 327.dp, height = 52.dp),
+            shape = RoundedCornerShape(6.dp)
+        ) {
+            Text(
+                text = "Get Start",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                fontFamily = poppinsFontFamily
+            )
 
+        }
     }
-    }
-
 
 
 }
