@@ -2,10 +2,9 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="app">
+      <SelectionState runConfigName="OnBoardingScreen">
         <option name="selectionMode" value="DROPDOWN" />
-<<<<<<< HEAD
-        <DropdownSelection timestamp="2024-12-05T10:13:52.294648Z">
+        <DropdownSelection timestamp="2024-12-06T15:09:41.983396700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=D:\Android Studio\.android\avd\Pixel_7a_API_34.avd" />
@@ -13,14 +12,6 @@
           </Target>
         </DropdownSelection>
         <DialogSelection />
-      </SelectionState>
-      <SelectionState runConfigName="PreviewRecipeDetailScreen">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="PreviewRecipeDetailScreen (1)">
-        <option name="selectionMode" value="DROPDOWN" />
-=======
->>>>>>> createaccountscreen
       </SelectionState>
     </selectionStates>
   </component>
