@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,10 +53,11 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import uk.ac.tees.mad.d3812242.R
 import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
+import uk.ac.tees.mad.d3812242.viewmodels.SignUpScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileSettingsScreen(navHostController: NavHostController) {
+fun ProfileSettingsScreen(navHostController: NavHostController,signUpScreenViewModel: SignUpScreenViewModel) {
 
     val poppinsFontFamily = FontFamily(Font(resId = R.font.poppins_semibold))
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
@@ -67,6 +69,13 @@ fun ProfileSettingsScreen(navHostController: NavHostController) {
     var phoneNumber by remember {
         mutableStateOf(" Enter your PhoneNumber")
     }
+
+    LaunchedEffect(Unit) {
+        signUpScreenViewModel.fetchUsername()
+    }
+
+    val username = signUpScreenViewModel.username
+    val email = signUpScreenViewModel.email
 
     Scaffold(
         topBar = {
@@ -121,8 +130,8 @@ fun ProfileSettingsScreen(navHostController: NavHostController) {
                     }
                 }
 
-                ProfileField(label = "Full name", value = "Junaid Ahmad")
-                ProfileField(label = "Email", value = "Junaidahmad791@gmail.com")
+                ProfileField(label = "Full name", value = username ?: "Loading...")
+                ProfileField(label = "Email", value = email ?: "Loading...")
                 ProfileField(label = "Phone number", value = "Enter your Phone Number")
                 PasswordField(navHostController)
 
@@ -131,7 +140,7 @@ fun ProfileSettingsScreen(navHostController: NavHostController) {
 
 
                 OutlinedButton(
-                    onClick = { /* Handle logout */ },
+                    onClick = { navHostController.navigate(Routes.SignUpScreen) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange))
                 ) {

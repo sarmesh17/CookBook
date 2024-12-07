@@ -19,7 +19,7 @@ import uk.ac.tees.mad.d3812242.presentation.ui.searchhistoryscreen.UKFoodSearchH
 import uk.ac.tees.mad.d3812242.presentation.viewmodels.RecipeViewModel
 
 @Composable
-fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewModel,){
+fun CookBookComposableNavigationSystem(context: Context,/*viewModel: RecipeViewModel*/){
 
     val navController= rememberNavController()
 
@@ -39,7 +39,7 @@ fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewMod
         }
 
         composable<Routes.HomeScreen> {
-            HomeScreen(navController, viewModel = viewModel, signUpScreenViewModel = hiltViewModel() )
+            HomeScreen(navController, viewModel = RecipeViewModel(), signUpScreenViewModel = hiltViewModel() )
         }
 
         composable<Routes.OnBoardingScreen> {
@@ -52,7 +52,7 @@ fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewMod
         }
 
         composable<Routes.BookMarkScreen> {
-            BookmarkScreen(viewModel,navController)
+            BookmarkScreen(viewModel= RecipeViewModel(),navController)
         }
 
         composable<Routes.RecipeDetailScreen> {
@@ -66,8 +66,7 @@ fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewMod
         }
 
         composable<Routes.ProfileScreen> {
-
-            ProfileSettingsScreen(navController)
+            ProfileSettingsScreen(navController, signUpScreenViewModel = hiltViewModel())
         }
 
     }
