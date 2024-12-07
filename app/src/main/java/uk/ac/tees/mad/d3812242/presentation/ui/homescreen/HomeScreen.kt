@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,9 +47,11 @@ import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.RecipeCard
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.scrollabletextbutton.ScrollableTextButtonsRow
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.searchbar.SearchBar
 import uk.ac.tees.mad.d3812242.presentation.viewmodels.RecipeViewModel
+import uk.ac.tees.mad.d3812242.viewmodels.SignUpScreenViewModel
+import kotlin.math.sign
 
 @Composable
-fun HomeScreen(navHostController: NavHostController,viewModel: RecipeViewModel) {
+fun HomeScreen(navHostController: NavHostController, signUpScreenViewModel: SignUpScreenViewModel, viewModel: RecipeViewModel) {
 
     var searchText by remember {
         mutableStateOf("")
@@ -210,6 +213,11 @@ fun HomeScreen(navHostController: NavHostController,viewModel: RecipeViewModel) 
         "🥖 Baguette", "🥘 Paella", "🍕 Pizza", "🍝 Spaghetti", "🍲 Stew",
     )
 
+    LaunchedEffect(Unit) {
+        signUpScreenViewModel.fetchUsername()
+    }
+
+    val username = signUpScreenViewModel.username
     var selectedCategory by remember { mutableStateOf("All") }
     var selectedTab by remember { mutableStateOf("Home") }
 
@@ -280,7 +288,7 @@ fun HomeScreen(navHostController: NavHostController,viewModel: RecipeViewModel) 
                     Spacer(modifier = Modifier.height(4.dp))
                     // name
                     Text(
-                        "Ashish Chanchalani",
+                        username ?: "Loading...",
                         fontSize = 16.sp,
                         fontFamily = poppinsFontFamily,
                         letterSpacing = 0.sp

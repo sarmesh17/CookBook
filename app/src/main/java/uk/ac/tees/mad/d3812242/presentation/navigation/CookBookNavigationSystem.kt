@@ -2,6 +2,7 @@ package uk.ac.tees.mad.d3812242.presentation.navigation
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,7 +19,7 @@ import uk.ac.tees.mad.d3812242.presentation.ui.searchhistoryscreen.UKFoodSearchH
 import uk.ac.tees.mad.d3812242.presentation.viewmodels.RecipeViewModel
 
 @Composable
-fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewModel){
+fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewModel,){
 
     val navController= rememberNavController()
 
@@ -30,15 +31,15 @@ fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewMod
         }
 
         composable<Routes.LoginScreen> {
-            LoginScreen(navController)
+            LoginScreen(navController, hiltViewModel())
         }
 
         composable<Routes.SignUpScreen> {
-            CreateAccountScreen()
+            CreateAccountScreen(navController, hiltViewModel(), hiltViewModel())
         }
 
         composable<Routes.HomeScreen> {
-            HomeScreen(navController, viewModel = viewModel)
+            HomeScreen(navController, viewModel = viewModel, signUpScreenViewModel = hiltViewModel() )
         }
 
         composable<Routes.OnBoardingScreen> {
@@ -58,6 +59,10 @@ fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewMod
 
             RecipeDetailScreenWithAnimation(it)
 
+        }
+
+        composable<Routes.SignUpScreen> {
+            CreateAccountScreen(navController, hiltViewModel(), hiltViewModel())
         }
 
         composable<Routes.ProfileScreen> {
