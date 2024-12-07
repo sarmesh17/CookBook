@@ -1,4 +1,4 @@
-package uk.ac.tees.mad.d3812242.presentation.splashscreen
+package uk.ac.tees.mad.d3812242.presentation.ui.splashscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,12 +40,12 @@ fun SplashScreen(navController: NavController,dataStoreManager: DataStoreManager
     LaunchedEffect(Unit) {
         val isOnboardingCompleted = dataStoreManager.isOnboardingCompleted()
         if (isOnboardingCompleted) {
-            navController.navigate("home") {
-                popUpTo("splash") { inclusive = true }
+            navController.navigate(Routes.HomeScreen) {
+                popUpTo(Routes.SplashScreen) { inclusive = true }
             }
         } else {
-            navController.navigate("onboarding") {
-                popUpTo("splash") { inclusive = true }
+            navController.navigate(Routes.OnBoardingScreen) {
+                popUpTo(Routes.SplashScreen) { inclusive = true }
             }
         }
     }

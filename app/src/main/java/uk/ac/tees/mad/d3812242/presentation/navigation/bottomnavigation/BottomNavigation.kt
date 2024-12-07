@@ -1,4 +1,4 @@
-package uk.ac.tees.mad.d3812242.presentation.ui.bottomnavigation
+package uk.ac.tees.mad.d3812242.presentation.navigation.bottomnavigation
 
 
 import androidx.compose.foundation.layout.padding

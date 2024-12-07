@@ -1,4 +1,4 @@
-package uk.ac.tees.mad.d3812242.presentation.onboardingscreen
+package uk.ac.tees.mad.d3812242.presentation.ui.onboardingscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +19,8 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,32 +34,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import kotlinx.coroutines.launch
 import uk.ac.tees.mad.d3812242.R
+import uk.ac.tees.mad.d3812242.data.localmanager.DataStoreManager
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
 
 @Composable
-@Preview(showBackground = true)
-fun OnBoardingScreen() {
+fun OnBoardingScreen(dataStoreManager: DataStoreManager, navHostController: NavHostController) {
+
+    val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         val poppinsFontFamily = FontFamily(
             Font(resId = R.font.poppins_semibold, weight = FontWeight.Bold)
         )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 15.dp, end = 20.dp), horizontalArrangement = Arrangement.End
-        ) {
-            Button(
-                onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(
-                        id = R.color.culturedWhite
-                    ), contentColor = Color.Gray,
-                ), shape = RoundedCornerShape(8.dp), modifier = Modifier.size(75.dp, 38.dp)
-            ) {
-                Text(text = "Skip", fontSize = 10.sp, fontFamily = poppinsFontFamily)
 
-            }
-        }
         Spacer(modifier = Modifier.height(200.dp))
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             Image(
@@ -119,7 +111,15 @@ fun OnBoardingScreen() {
         }
         Spacer(modifier = Modifier.height(35.dp))
         Button(
-            onClick = { },
+            onClick = {
+                // Set onboarding as completed and navigate to Home
+                coroutineScope.launch {
+                    dataStoreManager.setOnboardingCompleted(true)
+                    navHostController.navigate(Routes.LoginScreen) {
+                        popUpTo(Routes.OnBoardingScreen) { inclusive = true }
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(
                     id = R.color.amberOrange
