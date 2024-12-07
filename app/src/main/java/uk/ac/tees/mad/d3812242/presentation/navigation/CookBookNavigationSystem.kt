@@ -6,15 +6,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import uk.ac.tees.mad.d3812242.data.localmanager.DataStoreManager
+import uk.ac.tees.mad.d3812242.presentation.ui.bookmarkscreen.BookmarkScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.onboardingscreen.OnBoardingScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.splashscreen.SplashScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.createaccountscreen.CreateAccountScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.HomeScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.loginscreen.LoginScreen
+import uk.ac.tees.mad.d3812242.presentation.ui.profilescreen.ProfileSettingsScreen
+import uk.ac.tees.mad.d3812242.presentation.ui.reipedetailscreen.RecipeDetailScreenWithAnimation
 import uk.ac.tees.mad.d3812242.presentation.ui.searchhistoryscreen.UKFoodSearchHistoryScreen
+import uk.ac.tees.mad.d3812242.presentation.viewmodels.RecipeViewModel
 
 @Composable
-fun CookBookComposableNavigationSystem(context: Context){
+fun CookBookComposableNavigationSystem(context: Context,viewModel: RecipeViewModel){
 
     val navController= rememberNavController()
 
@@ -26,7 +30,7 @@ fun CookBookComposableNavigationSystem(context: Context){
         }
 
         composable<Routes.LoginScreen> {
-            LoginScreen()
+            LoginScreen(navController)
         }
 
         composable<Routes.SignUpScreen> {
@@ -34,7 +38,7 @@ fun CookBookComposableNavigationSystem(context: Context){
         }
 
         composable<Routes.HomeScreen> {
-            HomeScreen(navController)
+            HomeScreen(navController, viewModel = viewModel)
         }
 
         composable<Routes.OnBoardingScreen> {
@@ -44,6 +48,21 @@ fun CookBookComposableNavigationSystem(context: Context){
 
              UKFoodSearchHistoryScreen(navController)
 
+        }
+
+        composable<Routes.BookMarkScreen> {
+            BookmarkScreen(viewModel,navController)
+        }
+
+        composable<Routes.RecipeDetailScreen> {
+
+            RecipeDetailScreenWithAnimation(it)
+
+        }
+
+        composable<Routes.ProfileScreen> {
+
+            ProfileSettingsScreen(navController)
         }
 
     }

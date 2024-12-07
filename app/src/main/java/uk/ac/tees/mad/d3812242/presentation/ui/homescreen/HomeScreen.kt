@@ -41,17 +41,159 @@ import uk.ac.tees.mad.d3812242.presentation.navigation.bottomnavigation.BottomNa
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.categoriesrow.CategoriesRow
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.categoriesrow.Category
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.foodselectionButtons.HorizontalScrollable
+import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.Recipe
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.RecipeCard
-import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.recipes
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.scrollabletextbutton.ScrollableTextButtonsRow
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.searchbar.SearchBar
+import uk.ac.tees.mad.d3812242.presentation.viewmodels.RecipeViewModel
 
 @Composable
-fun HomeScreen(navHostController: NavHostController) {
+fun HomeScreen(navHostController: NavHostController,viewModel: RecipeViewModel) {
 
     var searchText by remember {
         mutableStateOf("")
     }
+
+    val recipes = listOf(
+        Recipe(
+            name = "Spiced Fried Chicken",
+            description = "A delicious spiced fried chicken recipe perfect for all occasions.",
+            imageRes = R.drawable.fried_chicken_rice_img,
+            rating = "4.5",
+            ingredients = listOf(
+                "200 grams of chicken",
+                "6 tbsp olive oil",
+                "3 tsp soy sauce",
+                "2 tsp chili powder",
+                "1 clove garlic, minced",
+                "Salt to taste"
+            ),
+            steps = listOf(
+                "Marinate the chicken with chili powder, soy sauce, and salt.",
+                "Heat olive oil in a pan and fry the chicken until golden brown.",
+                "Garnish with fresh herbs and serve."
+            ),
+            category = "Chili chicken" // Category added
+        ),
+        Recipe(
+            name = "Spicy Chicken",
+            description = "A quick and easy spicy chicken recipe for spice lovers.",
+            imageRes = R.drawable.chili_chicken_img,
+            rating = "4.2",
+            ingredients = listOf(
+                "500 grams of chicken breast",
+                "2 tbsp chili sauce",
+                "1 tbsp soy sauce",
+                "2 cloves garlic, minced",
+                "1 tbsp vegetable oil",
+                "Salt and pepper to taste"
+            ),
+            steps = listOf(
+                "Cut chicken breast into cubes.",
+                "Marinate with chili sauce, soy sauce, and garlic.",
+                "Heat oil in a pan and cook the chicken until fully done.",
+                "Serve hot with rice or noodles."
+            ),
+            category = "Chili chicken" // Category added
+        ),
+        Recipe(
+            name = "Crispy Tofu Delight",
+            description = "Crunchy tofu cubes served with a tangy dipping sauce.",
+            imageRes = R.drawable.crispy_tofu_img,
+            rating = "4.7",
+            ingredients = listOf(
+                "200 grams of tofu",
+                "3 tbsp cornstarch",
+                "1 tbsp soy sauce",
+                "1 tsp garlic powder",
+                "Vegetable oil for frying"
+            ),
+            steps = listOf(
+                "Cut tofu into bite-sized cubes.",
+                "Coat tofu in soy sauce, then toss in cornstarch mixed with garlic powder.",
+                "Fry until golden brown and crispy."
+            ),
+            category = "Crispy tofu" // Category added
+        ),
+        Recipe(
+            name = "Crispy Tofu Stick",
+            description = "Golden fried tofu sticks perfect for snacks or appetizers.",
+            imageRes = R.drawable.crispy_tofu_stick_img,
+            rating = "4.4",
+            ingredients = listOf(
+                "200 grams of tofu",
+                "Breadcrumbs",
+                "1 egg, beaten",
+                "Salt and pepper to taste",
+                "Vegetable oil for frying"
+            ),
+            steps = listOf(
+                "Cut tofu into stick shapes.",
+                "Dip each stick in the beaten egg, then coat with breadcrumbs.",
+                "Fry in hot oil until golden and crispy."
+            ),
+            category = "Crispy tofu" // Category added
+        ),
+        Recipe(
+            name = "Golden Fried Fish",
+            description = "Crispy fried fish with a golden-brown crust.",
+            imageRes = R.drawable.fried_fish,
+            rating = "4.6",
+            ingredients = listOf(
+                "2 fish fillets",
+                "1 cup flour",
+                "1 tsp paprika",
+                "1/2 tsp black pepper",
+                "Vegetable oil for frying"
+            ),
+            steps = listOf(
+                "Season the fish with paprika, black pepper, and salt.",
+                "Coat the fish fillets in flour.",
+                "Fry in hot oil until crispy and golden brown."
+            ),
+            category = "Fried fish" // Category added
+        ),
+        Recipe(
+            name = "Traditional Sunday Roast",
+            description = "A hearty roast perfect for Sunday family gatherings.",
+            imageRes = R.drawable.sunday_roast,
+            rating = "4.8",
+            ingredients = listOf(
+                "1 whole chicken",
+                "2 cups potatoes, peeled and chopped",
+                "2 carrots, chopped",
+                "2 tbsp olive oil",
+                "Salt and pepper to taste",
+                "Rosemary sprigs"
+            ),
+            steps = listOf(
+                "Preheat oven to 200°C (400°F).",
+                "Season the chicken with salt, pepper, and rosemary.",
+                "Place the chicken, potatoes, and carrots on a baking tray.",
+                "Drizzle with olive oil and roast for 1 hour or until cooked."
+            ),
+            category = "Roast" // Category added
+        ),
+        Recipe(
+            name = "All-Time Favorite Chicken",
+            description = "A simple and classic chicken recipe loved by everyone.",
+            imageRes = R.drawable.fried_chicken_rice_img,
+            rating = "4.3",
+            ingredients = listOf(
+                "500 grams of chicken",
+                "3 tbsp soy sauce",
+                "2 tsp ginger paste",
+                "1 tsp sugar",
+                "Vegetable oil for frying"
+            ),
+            steps = listOf(
+                "Marinate chicken with soy sauce, ginger paste, and sugar for 30 minutes.",
+                "Heat oil in a pan and fry chicken until golden brown.",
+                "Serve with steamed rice or veggies."
+            ),
+            category = "Chili chicken" // Category added
+        )
+    )
 
 
     val poppinsFontFamily = FontFamily(
@@ -86,10 +228,22 @@ fun HomeScreen(navHostController: NavHostController) {
         BottomNavigationBar(onTabSelected = {
             selectedTab = it
 
-            if (selectedTab == "Search"){
+            when (selectedTab) {
+                "Search" -> {
 
-                navHostController.navigate(Routes.SearchScreen)
+                    navHostController.navigate(Routes.SearchScreen)
 
+                }
+                "Saved" -> {
+
+                    navHostController.navigate(Routes.BookMarkScreen)
+                }
+                "Profile" -> {
+                    navHostController.navigate(Routes.ProfileScreen)
+                }
+                else -> {
+                    navHostController.navigate(Routes.HomeScreen)
+                }
             }
         }, selectedTab = selectedTab)
     }) { innerpadding ->
@@ -174,7 +328,7 @@ fun HomeScreen(navHostController: NavHostController) {
 
             LazyRow(modifier = Modifier.wrapContentSize()) {
                 items(filteredRecipes.size) { index ->
-                    RecipeCard(recipe = filteredRecipes[index])
+                    RecipeCard(recipe = filteredRecipes[index], viewModel = viewModel,navHostController=navHostController)
                 }
             }
 

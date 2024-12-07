@@ -2,9 +2,15 @@ package uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -27,34 +33,48 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import uk.ac.tees.mad.d3812242.R
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
+import uk.ac.tees.mad.d3812242.presentation.viewmodels.RecipeViewModel
 
-data class Recipe(val name: String, val category: String, val imageRes: Int)
+data class Recipe(
+    val name: String,
+    val description: String,
+    val imageRes: Int,
+    val rating: String,
+    val ingredients: List<String>,
+    val steps: List<String>,
+    val category: String // Add this line
 
-val recipes = listOf(
-    Recipe("Spiced Fried Chicken", "Chili chicken", R.drawable.fried_chicken_rice_img),
-    Recipe("spicy chicken", "Chili chicken", R.drawable.chili_chicken_img),
-
-    Recipe("Crispy Tofu Delight", "Crispy tofu", R.drawable.crispy_tofu_img),
-    Recipe("Crispy Tofu Stick", "Crispy tofu", R.drawable.crispy_tofu_stick_img),
-
-    Recipe("Golden Fried Fish", "Fried fish", R.drawable.fried_fish),
-
-    Recipe("Traditional Sunday Roast", "Roast", R.drawable.sunday_roast),
-    Recipe("All-Time Favorite Chicken", "All", R.drawable.fried_chicken_rice_img)
 )
 
-@Composable
-fun RecipeCard(recipe: Recipe) {
+// Updated Recipe list with additional data
 
-    var isBookMarkClicked by remember {
+
+@Composable
+fun RecipeCard(recipe: Recipe, viewModel: RecipeViewModel, navHostController: NavHostController) {
+
+    var isBookmarked by remember {
         mutableStateOf(false)
     }
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .padding(8.dp)
-            .width(290.dp),
+            .width(290.dp)
+            .clickable {
+                navHostController.navigate(
+                    Routes.RecipeDetailScreen(
+                        name = recipe.name,
+                        description = recipe.description,
+                        imageRes = recipe.imageRes,
+                        rating = recipe.rating,
+                        ingredients = recipe.ingredients,
+                        steps = recipe.steps
+                    )
+                )
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
@@ -82,27 +102,21 @@ fun RecipeCard(recipe: Recipe) {
                 Text(text = "30 min", fontSize = 12.sp, color = Color.Gray)
 
                 Box(modifier = Modifier.fillMaxWidth()) {
-
-                    if (isBookMarkClicked){
-                        Icon(
-                            painter = painterResource(R.drawable.bookmark_filled),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .size(18.dp),
-                            tint = colorResource(R.color.orange)
-                        )
-
-
-                    }else {
-                        Icon(
-                            painter = painterResource(R.drawable.bookmark_outlined),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .size(18.dp)
-                                .clickable { isBookMarkClicked = true })
-                    }
+                    Icon(
+                        painter = painterResource(
+                            if (isBookmarked) R.drawable.bookmark_filled
+                            else R.drawable.bookmark_outlined
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .size(18.dp)
+                            .clickable {
+                                viewModel.toggleBookmark(recipe)
+                                isBookmarked = !isBookmarked
+                            },
+                        tint = if (isBookmarked) colorResource(R.color.orange) else Color.Gray
+                    )
                 }
             }
         }

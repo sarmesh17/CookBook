@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "473153239258",
+    "project_id": "cookbook-2c60a",
+    "storage_bucket": "cookbook-2c60a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473153239258:android:14a4f14cb1b9ab9b594de3",
+        "android_client_info": {
+          "package_name": "uk.ac.tees.mad.d3812242"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlTI4G3Aw2JZy4Q7Mf9fCOmMqCtuKSQM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

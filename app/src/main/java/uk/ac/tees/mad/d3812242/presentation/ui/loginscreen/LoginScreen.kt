@@ -37,15 +37,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import uk.ac.tees.mad.d3812242.R
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
 
 @Composable
 @Preview(showBackground = true)
-fun LoginScreen(){
+fun LoginScreen(navController: NavHostController) {
     var poppinsFontFamily = FontFamily(
-        Font(resId =R.font.poppins,weight =FontWeight.Bold)
+        Font(resId = R.font.poppins, weight = FontWeight.Bold)
     )
-
 
 
     var email by remember {
@@ -54,6 +55,10 @@ fun LoginScreen(){
     }
     var isChecked by remember {
         mutableStateOf(false)
+    }
+
+    var password by remember {
+        mutableStateOf("")
     }
     Column(modifier = Modifier.fillMaxSize()) {
         Box {
@@ -77,7 +82,12 @@ fun LoginScreen(){
                     contentDescription = null, tint = Color.White,
                     modifier = Modifier.size(20.dp)
                 )
-                Text(text = "Sign Up", fontSize = 20.sp, color = Color.White, fontFamily = poppinsFontFamily)
+                Text(
+                    text = "Sign Up",
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    fontFamily = poppinsFontFamily
+                )
             }
         }
         Row(
@@ -97,7 +107,13 @@ fun LoginScreen(){
             TextField(
                 value = email,
                 onValueChange = { email = it },
-                placeholder = { Text(text = "Your Email", fontSize = 15.sp, fontFamily = poppinsFontFamily) },
+                placeholder = {
+                    Text(
+                        text = "Your Email",
+                        fontSize = 15.sp,
+                        fontFamily = poppinsFontFamily
+                    )
+                },
                 colors = TextFieldDefaults.colors(
                     unfocusedIndicatorColor = colorResource(
                         id = R.color.amberOrange
@@ -110,9 +126,15 @@ fun LoginScreen(){
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextField(
-                value = email,
-                onValueChange = { email = it },
-                placeholder = { Text(text = "Password", fontSize = 15.sp, fontFamily = poppinsFontFamily) },
+                value = password,
+                onValueChange = { password = it },
+                placeholder = {
+                    Text(
+                        text = "Password",
+                        fontSize = 15.sp,
+                        fontFamily = poppinsFontFamily
+                    )
+                },
                 colors = TextFieldDefaults.colors(
                     unfocusedIndicatorColor = colorResource(
                         id = R.color.amberOrange
@@ -125,13 +147,25 @@ fun LoginScreen(){
             )
 
         }
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 20.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically){
-            Switch(checked = isChecked, onCheckedChange = {isChecked=it}, colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = colorResource(
-                id = R.color.amberOrange
-            ), uncheckedThumbColor = Color.White, uncheckedTrackColor = colorResource(id = R.color.amberOrange)
-            ))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Switch(
+                checked = isChecked,
+                onCheckedChange = { isChecked = it },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = colorResource(
+                        id = R.color.amberOrange
+                    ),
+                    uncheckedThumbColor = Color.White,
+                    uncheckedTrackColor = colorResource(id = R.color.amberOrange)
+                )
+            )
             Spacer(modifier = Modifier.width(12.dp))
             Text(text = "Remember", fontFamily = poppinsFontFamily)
             Spacer(modifier = Modifier.width(170.dp))
@@ -146,7 +180,7 @@ fun LoginScreen(){
         )
         {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Routes.HomeScreen) },
                 modifier = Modifier.size(234.dp, 40.dp),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = colorResource(
