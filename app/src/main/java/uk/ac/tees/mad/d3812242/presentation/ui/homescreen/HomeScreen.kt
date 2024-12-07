@@ -1,12 +1,10 @@
 package uk.ac.tees.mad.d3812242.presentation.ui.homescreen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,8 +35,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import uk.ac.tees.mad.d3812242.R
-import uk.ac.tees.mad.d3812242.presentation.ui.bottomnavigation.BottomNavigationBar
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
+import uk.ac.tees.mad.d3812242.presentation.navigation.bottomnavigation.BottomNavigationBar
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.categoriesrow.CategoriesRow
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.categoriesrow.Category
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.foodselectionButtons.HorizontalScrollable
@@ -45,22 +46,22 @@ import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.RecipeCard
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.recipes
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.scrollabletextbutton.ScrollableTextButtonsRow
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.searchbar.SearchBar
+import uk.ac.tees.mad.d3812242.viewmodels.SignUpScreenViewModel
+import kotlin.math.sign
 
 @Composable
-@Preview(showSystemUi = true)
-fun HomeScreen() {
+fun HomeScreen(navHostController: NavHostController, signUpScreenViewModel: SignUpScreenViewModel) {
 
     var searchText by remember {
         mutableStateOf("")
     }
-
 
     val poppinsFontFamily = FontFamily(
 
         Font(resId = R.font.poppins_semibold)
     )
 
-    val asianDishItem= listOf( // Asian dishes
+    val asianDishItem = listOf( // Asian dishes
         "🍣 Sushi", "🍜 Ramen", "🥟 Dumplings", "🍚 Fried Rice", "🥢 Noodles"
     )
 
@@ -69,6 +70,11 @@ fun HomeScreen() {
         "🥖 Baguette", "🥘 Paella", "🍕 Pizza", "🍝 Spaghetti", "🍲 Stew",
     )
 
+    LaunchedEffect(Unit) {
+        signUpScreenViewModel.fetchUsername()
+    }
+
+    val username = signUpScreenViewModel.username
     var selectedCategory by remember { mutableStateOf("All") }
     var selectedTab by remember { mutableStateOf("Home") }
 
@@ -80,12 +86,24 @@ fun HomeScreen() {
         Category("Desserts", R.drawable.desserts_img)
     )
 
-    val verticalScrollState= rememberScrollState()
+    val verticalScrollState = rememberScrollState()
 
 
-    Scaffold(bottomBar = { BottomNavigationBar(onTabSelected = {selectedTab = it}, selectedTab = selectedTab ) }) { innerpadding ->
+    Scaffold(bottomBar = {
+        BottomNavigationBar(onTabSelected = {
+            selectedTab = it
 
-        Column(modifier = Modifier.padding(innerpadding).verticalScroll(verticalScrollState)) {
+            if (selectedTab == "Search"){
+
+                navHostController.navigate(Routes.SearchScreen)
+
+            }
+        }, selectedTab = selectedTab)
+    }) { innerpadding ->
+
+        Column(modifier = Modifier
+            .padding(innerpadding)
+            .verticalScroll(verticalScrollState)) {
 
             Row(
                 modifier = Modifier
@@ -114,7 +132,12 @@ fun HomeScreen() {
 
                     Spacer(modifier = Modifier.height(4.dp))
                     // name
-                    Text("Ashish Chanchalani", fontSize = 16.sp, fontFamily = poppinsFontFamily,letterSpacing = 0.sp)
+                    Text(
+                        username ?: "Loading...",
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFontFamily,
+                        letterSpacing = 0.sp
+                    )
                 }
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
@@ -128,7 +151,9 @@ fun HomeScreen() {
 
             }
 
-            SearchBar(query = searchText, onSearch = {}, onQueryChanged = { searchText = it })
+            Spacer(modifier = Modifier.height(16.dp))
+
+            SearchBar(navHostController = navHostController)
 
 
             Text(
@@ -138,8 +163,8 @@ fun HomeScreen() {
                 modifier = Modifier.padding(18.dp), fontFamily = poppinsFontFamily,
             )
 
-           HorizontalScrollable(asianDishItem)
-           HorizontalScrollable(europeanDishItem)
+            HorizontalScrollable(asianDishItem)
+            HorizontalScrollable(europeanDishItem)
 
             Spacer(Modifier.height(20.dp))
 
@@ -160,7 +185,7 @@ fun HomeScreen() {
                 }
             }
 
-
+            //categories section
             CategoriesRow(categories)
 
 

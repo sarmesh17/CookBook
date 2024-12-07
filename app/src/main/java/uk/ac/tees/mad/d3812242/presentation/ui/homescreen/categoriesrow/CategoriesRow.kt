@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Color
 import uk.ac.tees.mad.d3812242.R
 
 @Composable
@@ -77,7 +78,7 @@ fun CategoryCard(title: String, imageRes: Int) {
     Card(
         modifier = Modifier
             .width(100.dp)
-            .height(140.dp)
+            .height(120.dp)
             .clickable {
                 scope.launch {
                     // Animate the image to move up
@@ -97,7 +98,7 @@ fun CategoryCard(title: String, imageRes: Int) {
                 }
             },
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
@@ -112,7 +113,6 @@ fun CategoryCard(title: String, imageRes: Int) {
                     .size(80.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .offset(y = Dp(imageOffsetY.value)), // Apply vertical offset animation to image
-                contentScale = ContentScale.Crop
             )
             Text(
                 text = title,

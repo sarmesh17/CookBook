@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="orange">#fb9400</color>
+    <color name="vividOrange">#fb9400</color>
+    <color name="culturedWhite">#f3f4f6</color>
+    <color name="amberOrange">#fb9400</color>
+
+
 </resources>

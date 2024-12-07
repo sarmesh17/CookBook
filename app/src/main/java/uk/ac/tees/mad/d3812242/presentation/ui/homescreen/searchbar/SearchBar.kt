@@ -1,6 +1,7 @@
 package uk.ac.tees.mad.d3812242.presentation.ui.homescreen.searchbar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -20,17 +21,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
 
 
 @Composable
 fun SearchBar(
-    query: String,
-    onQueryChanged: (String) -> Unit,
-    onSearch: () -> Unit
+    navHostController: NavHostController
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth()
-            .padding( vertical = 4.dp, horizontal = 16.dp),
+            .padding( vertical = 4.dp, horizontal = 16.dp).clickable { navHostController.navigate(Routes.SearchScreen) },
         color = Color.White,
         shape = RoundedCornerShape(8.dp),
         shadowElevation = 4.dp

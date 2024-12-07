@@ -19,7 +19,7 @@ fun ScrollableTextButtonsRow(
     onCategorySelected: (String) -> Unit // Callback to update selected category
 ) {
     val scrollState = rememberScrollState()
-    val buttonTexts = listOf("All", "Chili chicken", "Crispy tofu", "Fried fish", "Paneer tikka")
+    val buttonTexts = listOf("All", "Chili chicken", "Crispy tofu", "Fried fish", "Roast")
 
     val poppinsFontFamily = FontFamily(Font(resId = R.font.poppins_semibold, weight = FontWeight.Bold))
 
