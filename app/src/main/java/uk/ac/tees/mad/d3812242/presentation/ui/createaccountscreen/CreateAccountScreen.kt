@@ -94,7 +94,7 @@ fun CreateAccountScreen(
                     painter = painterResource(id = R.drawable.vector),
                     contentDescription = null,
                     tint = Color.White,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp).clickable { navController.popBackStack() }
                 )
                 Text(
                     text = "Log In",
