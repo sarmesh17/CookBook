@@ -30,8 +30,9 @@ import uk.ac.tees.mad.d3812242.R
 import uk.ac.tees.mad.d3812242.data.localmanager.DataStoreManager
 import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
 
+
 @Composable
-fun SplashScreen(navController: NavController,dataStoreManager: DataStoreManager) {
+fun SplashScreen(navController: NavController, dataStoreManager: DataStoreManager) {
 
     val poppinsFontFamily = FontFamily(
         Font(resId = R.font.poppins_semibold, weight = FontWeight.Bold)
@@ -39,16 +40,27 @@ fun SplashScreen(navController: NavController,dataStoreManager: DataStoreManager
 
     LaunchedEffect(Unit) {
         val isOnboardingCompleted = dataStoreManager.isOnboardingCompleted()
-        if (isOnboardingCompleted) {
-            navController.navigate(Routes.HomeScreen) {
-                popUpTo(Routes.SplashScreen) { inclusive = true }
+        val isUserLoggedIn = dataStoreManager.isUserLoggedIn()
+
+        when {
+            !isOnboardingCompleted -> {
+                navController.navigate(Routes.OnBoardingScreen) {
+                    popUpTo(Routes.SplashScreen) { inclusive = true }
+                }
             }
-        } else {
-            navController.navigate(Routes.OnBoardingScreen) {
-                popUpTo(Routes.SplashScreen) { inclusive = true }
+            !isUserLoggedIn -> {
+                navController.navigate(Routes.LoginScreen) {
+                    popUpTo(Routes.SplashScreen) { inclusive = true }
+                }
+            }
+            else -> {
+                navController.navigate(Routes.HomeScreen) {
+                    popUpTo(Routes.SplashScreen) { inclusive = true }
+                }
             }
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +82,5 @@ fun SplashScreen(navController: NavController,dataStoreManager: DataStoreManager
             color = Color.White,
             fontFamily = poppinsFontFamily
         )
-
-
     }
 }

@@ -34,7 +34,7 @@ import uk.ac.tees.mad.d3812242.R
 import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
 
 @Composable
-fun RecipeDetailScreenWithAnimation(recipe: NavBackStackEntry, onFollowClick: () -> Unit = {}) {
+fun RecipeDetailScreenWithAnimation(recipe: NavBackStackEntry) {
 
     val poppinsFontFamily = FontFamily(
 

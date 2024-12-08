@@ -1,6 +1,7 @@
 package uk.ac.tees.mad.d3812242.presentation.navigation
 
 import kotlinx.serialization.Serializable
+import okhttp3.Route
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.Recipe
 
 sealed class Routes {
@@ -21,6 +22,9 @@ sealed class Routes {
     data object HomeScreen : Routes()
 
     @Serializable
+    data object VegListScreen : Routes()
+
+    @Serializable
     data class RecipeDetailScreen(
         val name: String,
         val description: String,
@@ -38,5 +42,11 @@ sealed class Routes {
 
     @Serializable
     data object ProfileScreen: Routes()
+
+    @Serializable
+    data object BeefListScreen:Routes()
+
+    @Serializable
+    data object ChickenScreenList:Routes()
 
 }

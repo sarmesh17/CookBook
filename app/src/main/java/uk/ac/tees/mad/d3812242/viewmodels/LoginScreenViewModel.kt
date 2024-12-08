@@ -1,5 +1,6 @@
 package uk.ac.tees.mad.d3812242.viewmodels
 
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.util.Log
@@ -16,6 +17,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import uk.ac.tees.mad.d3812242.data.localmanager.DataStoreManager
 import uk.ac.tees.mad.d3812242.models.User
 import uk.ac.tees.mad.d3812242.utility.Constant
 import javax.inject.Inject
@@ -126,6 +128,15 @@ class LoginScreenViewModel @Inject constructor(
             }
         }
     }
+
+
+    fun updateLoginState(context: Context, isLoggedIn: Boolean) {
+        viewModelScope.launch {
+            val dataStoreManager = DataStoreManager(context)
+            dataStoreManager.setUserLoggedIn(isLoggedIn)
+        }
+    }
+
 
 
 }

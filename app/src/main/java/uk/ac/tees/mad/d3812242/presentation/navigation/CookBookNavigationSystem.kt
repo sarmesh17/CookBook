@@ -8,6 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import uk.ac.tees.mad.d3812242.data.localmanager.DataStoreManager
 import uk.ac.tees.mad.d3812242.presentation.ui.bookmarkscreen.BookmarkScreen
+import uk.ac.tees.mad.d3812242.presentation.ui.catgeorylist.beefscreenlist.BeefListScreen
+import uk.ac.tees.mad.d3812242.presentation.ui.catgeorylist.chickenscreenlist.ChickenListScreen
+import uk.ac.tees.mad.d3812242.presentation.ui.catgeorylist.vegetarianlist.VegetarianListScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.onboardingscreen.OnBoardingScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.splashscreen.SplashScreen
 import uk.ac.tees.mad.d3812242.presentation.ui.createaccountscreen.CreateAccountScreen
@@ -67,6 +70,18 @@ fun CookBookComposableNavigationSystem(context: Context,/*viewModel: RecipeViewM
 
         composable<Routes.ProfileScreen> {
             ProfileSettingsScreen(navController, signUpScreenViewModel = hiltViewModel())
+        }
+
+        composable<Routes.VegListScreen> {
+            VegetarianListScreen(navController)
+        }
+
+        composable<Routes.BeefListScreen> {
+            BeefListScreen(navController)
+        }
+
+        composable<Routes.ChickenScreenList> {
+            ChickenListScreen(navController)
         }
 
     }

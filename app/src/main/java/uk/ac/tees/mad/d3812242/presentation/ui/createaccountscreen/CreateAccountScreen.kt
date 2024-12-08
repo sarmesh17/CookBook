@@ -10,15 +10,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -32,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -47,244 +52,248 @@ import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
 import uk.ac.tees.mad.d3812242.viewmodels.LoginScreenViewModel
 import uk.ac.tees.mad.d3812242.viewmodels.SignUpScreenViewModel
 
+
 @Composable
-fun CreateAccountScreen(navController: NavController,signUpScreenViewModel: SignUpScreenViewModel,loginScreenViewModel: LoginScreenViewModel) {
+fun CreateAccountScreen(
+    navController: NavController,
+    signUpScreenViewModel: SignUpScreenViewModel,
+    loginScreenViewModel: LoginScreenViewModel
+) {
     val poppinsFontFamily =
         FontFamily(Font(resId = R.font.poppins_semibold, weight = FontWeight.Bold))
-    var email by remember {
-        androidx.compose.runtime.mutableStateOf("")
 
-    }
-    var isSubmitted by remember {
-        mutableStateOf(false)
-    }
-    var password by remember {
-        androidx.compose.runtime.mutableStateOf("")
+    var email by remember { mutableStateOf("") }
+    var isSubmitted by remember { mutableStateOf(false) }
+    var password by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
 
-    }
-    var uesrname by remember {
-        androidx.compose.runtime.mutableStateOf("")
+    val context = LocalContext.current
 
-    }
-
-    val context= LocalContext.current
-
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        // Header Image and Navigation Row
         Box {
             Image(
                 painter = painterResource(id = R.drawable.imgofcreateacc),
                 contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(260.dp)
+                    .aspectRatio(16 / 9f) // Maintain a responsive aspect ratio
             )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp, end = 10.dp, start = 10.dp, bottom = 10.dp),
+                    .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
-
                 Icon(
                     painter = painterResource(id = R.drawable.vector),
-                    contentDescription = null, tint = Color.White,
-                    modifier = Modifier.size(20.dp)
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
                 )
                 Text(
                     text = "Log In",
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     color = Color.White,
                     modifier = Modifier.clickable { navController.navigate(Routes.LoginScreen) },
                     fontFamily = poppinsFontFamily
                 )
             }
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, start = 15.dp)
-        ) {
-            Text(
-                text = "Let's start making good meals",
-                fontSize = 40.sp,
-                color = colorResource(id = R.color.amberOrange),
-                fontFamily = poppinsFontFamily
-            )
 
-        }
-        Column {
+        // Title Text
+        Text(
+            text = "Let's start making good meals",
+            fontSize = 23.sp,
+            color = colorResource(id = R.color.amberOrange),
+            fontFamily = poppinsFontFamily,
+            modifier = Modifier.padding(16.dp)
+        )
 
-            TextField(value = uesrname,
-                onValueChange = { uesrname = it },
-                placeholder = { Text(text = "User Name", fontSize = 15.sp, fontFamily = poppinsFontFamily) },
+        // Input Fields
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            // Username Field
+            TextField(
+                value = username,
+                onValueChange = { username = it },
+                placeholder = { Text(text = "User Name", fontSize = 14.sp, fontFamily = poppinsFontFamily) },
                 colors = TextFieldDefaults.colors(
-                    unfocusedIndicatorColor = colorResource(
-                        id = R.color.amberOrange
-                    ), focusedIndicatorColor = colorResource(id = R.color.amberOrange),
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
+                    unfocusedIndicatorColor = colorResource(id = R.color.amberOrange),
+                    focusedIndicatorColor = colorResource(id = R.color.amberOrange),
+                    focusedContainerColor =  Color.White,
+                    unfocusedContainerColor = Color.White
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp)
+                modifier = Modifier.fillMaxWidth()
             )
-            if (isSubmitted && email.isEmpty()) {
+            if (isSubmitted && username.isEmpty()) {
                 Text(
                     text = "Please enter your User name",
-                    color = Color.Red, fontFamily = poppinsFontFamily,
-                    modifier = Modifier.padding(start = 25.dp)
+                    color = Color.Red,
+                    fontFamily = poppinsFontFamily,
+                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(value = email,
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Email Field
+            TextField(
+                value = email,
                 onValueChange = { email = it },
-                placeholder = { Text(text = "Your Email", fontSize = 15.sp, fontFamily = poppinsFontFamily) },
+                placeholder = { Text(text = "Your Email", fontSize = 14.sp, fontFamily = poppinsFontFamily) },
                 colors = TextFieldDefaults.colors(
-                    unfocusedIndicatorColor = colorResource(
-                        id = R.color.amberOrange
-                    ), focusedIndicatorColor = colorResource(id = R.color.amberOrange),
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
+                    unfocusedIndicatorColor = colorResource(id = R.color.amberOrange),
+                    focusedIndicatorColor = colorResource(id = R.color.amberOrange),
+                    focusedContainerColor =  Color.White,
+                    unfocusedContainerColor = Color.White
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp)
+                modifier = Modifier.fillMaxWidth()
             )
             if (isSubmitted && email.isEmpty()) {
                 Text(
                     text = "Please enter your Email",
-                    color = Color.Red, fontFamily = poppinsFontFamily,
-                    modifier = Modifier.padding(start = 25.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(value = password,
-                onValueChange = { password = it },
-                placeholder = { Text(text = "Password", fontSize = 15.sp, fontFamily = poppinsFontFamily) },
-                colors = TextFieldDefaults.colors(
-                    unfocusedIndicatorColor = colorResource(
-                        id = R.color.amberOrange
-                    ), focusedIndicatorColor = colorResource(id = R.color.amberOrange),
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp)
-            )
-            if (isSubmitted && email.isEmpty()) {
-                Text(
-                    text = "Please enter Password",
-                    color = Color.Red, fontFamily = poppinsFontFamily,
-                    modifier = Modifier.padding(start = 25.dp)
+                    color = Color.Red,
+                    fontFamily = poppinsFontFamily,
+                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                 )
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Password Field
+            TextField(
+                value = password,
+                onValueChange = { password = it },
+                placeholder = { Text(text = "Password", fontSize = 14.sp, fontFamily = poppinsFontFamily) },
+                colors = TextFieldDefaults.colors(
+                    unfocusedIndicatorColor = colorResource(id = R.color.amberOrange),
+                    focusedIndicatorColor = colorResource(id = R.color.amberOrange),
+                    focusedContainerColor =  Color.White,
+                    unfocusedContainerColor = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth()
+            )
+            if (isSubmitted && password.isEmpty()) {
+                Text(
+                    text = "Please enter Password",
+                    color = Color.Red,
+                    fontFamily = poppinsFontFamily,
+                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+                )
+            }
         }
-        Spacer(modifier = Modifier.height(10.dp))
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Buttons and Divider
         Column(
             modifier = Modifier
-                .height(250.dp)
-                .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-        )
-        {
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Create Account Button
             Button(
-                onClick = { isSubmitted = true
-                    signUpScreenViewModel.signUpUser(uesrname,email,password)
-                    if (signUpScreenViewModel.isSignedUp.value == true) {
-                        Log.d("signUpScreen success", "state: ${signUpScreenViewModel.isSignedUp.value}")
-                        navController.navigate(Routes.HomeScreen)
-                    } else {
-                        Log.d("signUpScreen failed", "state: ${signUpScreenViewModel.isSignedUp.value}")
-                        Toast.makeText(context, signUpScreenViewModel.errorMessage, Toast.LENGTH_LONG).show()
+                onClick = {
+                    isSubmitted = true
+                    if (isUsernameValid(username) && isEmailValid(email) && isPasswordValid(password)) {
+                        signUpScreenViewModel.signUpUser(username, email, password)
+                        if (signUpScreenViewModel.isSignedUp.value) {
+                            navController.navigate(Routes.HomeScreen)
+                        } else {
+                            Toast.makeText(context, signUpScreenViewModel.errorMessage, Toast.LENGTH_LONG).show()
+                        }
                     }
                 },
-                modifier = Modifier.size(234.dp, 40.dp),
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    contentColor = colorResource(
-                        id = R.color.black
-                    ), containerColor = colorResource(id = R.color.amberOrange)
+                    contentColor = colorResource(id = R.color.black),
+                    containerColor = colorResource(id = R.color.amberOrange)
                 ),
                 shape = RoundedCornerShape(10.dp)
             ) {
                 Text(text = "Create Account", fontFamily = poppinsFontFamily)
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                HorizontalDivider(
-                    thickness = 1.5.dp, color = Color.Black, modifier = Modifier
-                        .width(80.dp)
-                        .padding(top = 8.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "OR")
-                Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                HorizontalDivider(
-                    thickness = 1.5.dp, color = Color.Black, modifier = Modifier
-                        .width(80.dp)
-                        .padding(top = 8.dp)
-                )
-
+            // Divider
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Divider(modifier = Modifier.weight(1f), color = Color.Black, thickness = 1.dp)
+                Text(text = "OR", modifier = Modifier.padding(horizontal = 8.dp), fontFamily = poppinsFontFamily)
+                Divider(modifier = Modifier.weight(1f), color = Color.Black, thickness = 1.dp)
             }
-            Spacer(modifier = Modifier.height(8.dp))
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Social Sign-Up Buttons
             Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier.size(234.dp, 40.dp),
+                onClick = { /* Facebook Sign-Up Logic */ },
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    contentColor = colorResource(
-                        id = R.color.black
-                    ), containerColor = colorResource(id = R.color.white)
+                    contentColor = colorResource(id = R.color.black),
+                    containerColor = Color.White
                 ),
                 shape = RoundedCornerShape(10.dp),
-                border = BorderStroke(width = 1.dp, color = Color.Black)
+                border = BorderStroke(1.dp, Color.Black)
             ) {
-                Row {
-                    Icon(
-                        painter = painterResource(id = R.drawable.facebook),
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        Color.Gray
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "Sign Up with Facebook", fontSize = 15.sp, fontFamily = poppinsFontFamily)
-
-                }
-
+                Icon(
+                    painter = painterResource(id = R.drawable.facebook),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Sign Up with Facebook", fontSize = 14.sp, fontFamily = poppinsFontFamily)
             }
-            Spacer(modifier = Modifier.height(8.dp))
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = {
-                    loginScreenViewModel.startSignIn();
-                },
-                modifier = Modifier.size(234.dp, 40.dp),
+                onClick = { loginScreenViewModel.startSignIn() },
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    contentColor = colorResource(
-                        id = R.color.black
-                    ), containerColor = colorResource(id = R.color.white)
+                    contentColor = colorResource(id = R.color.black),
+                    containerColor = Color.White
                 ),
                 shape = RoundedCornerShape(10.dp),
-                border = BorderStroke(width = 1.dp, color = Color.Black)
+                border = BorderStroke(1.dp, Color.Black)
             ) {
-                Row {
-                    Icon(
-                        painter = painterResource(id = R.drawable.google),
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        Color.Gray
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "Sign Up with Google", fontSize = 15.sp, fontFamily = poppinsFontFamily)
-
-                }
-
+                Icon(
+                    painter = painterResource(id = R.drawable.google),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Sign Up with Google", fontSize = 14.sp, fontFamily = poppinsFontFamily)
             }
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Term of Use and Privacy Policy", fontSize = 13.sp, fontFamily = poppinsFontFamily)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(text = "Terms of Use and Privacy Policy", fontSize = 12.sp, fontFamily = poppinsFontFamily)
         }
-
-
     }
+}
+// Validation functions
+fun isUsernameValid(username: String): Boolean {
+    return username.isNotEmpty()
+}
+
+fun isEmailValid(email: String): Boolean {
+    val emailRegex = Regex(pattern = "[^@]+@[^.]+\\..+")
+    return emailRegex.matches(email)
+}
+
+fun isPasswordValid(password: String): Boolean {
+    return password.length >= 6
 }

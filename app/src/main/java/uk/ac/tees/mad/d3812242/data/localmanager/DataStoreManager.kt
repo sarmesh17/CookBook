@@ -11,8 +11,10 @@ val Context.dataStore by preferencesDataStore(name = "app_preferences")
 class DataStoreManager(private val context: Context) {
     companion object {
         private val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
+        private val USER_LOGGED_IN = booleanPreferencesKey("user_logged_in")
     }
 
+    // Onboarding Status
     suspend fun setOnboardingCompleted(isCompleted: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[ONBOARDING_COMPLETED] = isCompleted
@@ -22,5 +24,17 @@ class DataStoreManager(private val context: Context) {
     suspend fun isOnboardingCompleted(): Boolean {
         val preferences = context.dataStore.data.first()
         return preferences[ONBOARDING_COMPLETED] ?: false
+    }
+
+    // Login Status
+    suspend fun setUserLoggedIn(isLoggedIn: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_LOGGED_IN] = isLoggedIn
+        }
+    }
+
+    suspend fun isUserLoggedIn(): Boolean {
+        val preferences = context.dataStore.data.first()
+        return preferences[USER_LOGGED_IN] ?: false
     }
 }

@@ -22,6 +22,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
+import uk.ac.tees.mad.d3812242.presentation.navigation.bottomnavigation.BottomNavigationBar
 import uk.ac.tees.mad.d3812242.presentation.ui.homescreen.recipecard.RecipeCard
 import uk.ac.tees.mad.d3812242.presentation.viewmodels.RecipeViewModel
 
@@ -34,7 +36,31 @@ fun BookmarkScreen(viewModel: RecipeViewModel,navHostController: NavHostControll
         recipe.name.contains(searchQuery, ignoreCase = true)
     }
 
-    Scaffold { paddingValues ->
+    var selectedTab by remember { mutableStateOf("Saved") }
+
+    Scaffold( bottomBar = {
+        BottomNavigationBar(onTabSelected = {
+            selectedTab = it
+
+            when (selectedTab) {
+                "Search" -> {
+
+                    navHostController.navigate(Routes.SearchScreen)
+
+                }
+                "Saved" -> {
+
+                    navHostController.navigate(Routes.BookMarkScreen)
+                }
+                "Profile" -> {
+                    navHostController.navigate(Routes.ProfileScreen)
+                }
+                else -> {
+                    navHostController.navigate(Routes.HomeScreen)
+                }
+            }
+        }, selectedTab = selectedTab)
+    }) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

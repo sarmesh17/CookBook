@@ -32,6 +32,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import uk.ac.tees.mad.d3812242.R
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
+import uk.ac.tees.mad.d3812242.presentation.navigation.bottomnavigation.BottomNavigationBar
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UKFoodSearchHistoryScreen(navHostController: NavHostController) {
@@ -76,6 +80,7 @@ fun UKFoodSearchHistoryScreen(navHostController: NavHostController) {
 
         Font(resId = R.font.poppins_semibold)
     )
+    var selectedTab by remember { mutableStateOf("Search") }
 
     Scaffold(
         topBar = {
@@ -83,6 +88,28 @@ fun UKFoodSearchHistoryScreen(navHostController: NavHostController) {
                 title = { Text(text = "Search Recipes", fontFamily = poppinsFontFamily) },
                 colors = TopAppBarDefaults.topAppBarColors(), navigationIcon = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null, modifier = Modifier.size(32.dp).clickable{navHostController.navigateUp()}) }
             )
+        }, bottomBar = {
+            BottomNavigationBar(onTabSelected = {
+                selectedTab = it
+
+                when (selectedTab) {
+                    "Search" -> {
+
+                        navHostController.navigate(Routes.SearchScreen)
+
+                    }
+                    "Saved" -> {
+
+                        navHostController.navigate(Routes.BookMarkScreen)
+                    }
+                    "Profile" -> {
+                        navHostController.navigate(Routes.ProfileScreen)
+                    }
+                    else -> {
+                        navHostController.navigate(Routes.HomeScreen)
+                    }
+                }
+            }, selectedTab = selectedTab)
         }
     ) { padding ->
         LazyColumn(

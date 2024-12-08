@@ -53,6 +53,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import uk.ac.tees.mad.d3812242.R
 import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
+import uk.ac.tees.mad.d3812242.presentation.navigation.bottomnavigation.BottomNavigationBar
 import uk.ac.tees.mad.d3812242.viewmodels.SignUpScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,6 +78,9 @@ fun ProfileSettingsScreen(navHostController: NavHostController,signUpScreenViewM
     val username = signUpScreenViewModel.username
     val email = signUpScreenViewModel.email
 
+    var selectedTab by remember { mutableStateOf("Profile") }
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -87,6 +91,29 @@ fun ProfileSettingsScreen(navHostController: NavHostController,signUpScreenViewM
                     }
                 }
             )
+        },
+        bottomBar = {
+            BottomNavigationBar(onTabSelected = {
+                selectedTab = it
+
+                when (selectedTab) {
+                    "Search" -> {
+
+                        navHostController.navigate(Routes.SearchScreen)
+
+                    }
+                    "Saved" -> {
+
+                        navHostController.navigate(Routes.BookMarkScreen)
+                    }
+                    "Profile" -> {
+                        navHostController.navigate(Routes.ProfileScreen)
+                    }
+                    else -> {
+                        navHostController.navigate(Routes.HomeScreen)
+                    }
+                }
+            }, selectedTab = selectedTab)
         },
         content = { innerPadding ->
             Column(

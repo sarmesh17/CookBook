@@ -267,7 +267,7 @@ fun HomeScreen(navHostController: NavHostController, signUpScreenViewModel: Sign
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(R.drawable.ashish_chanchlani),
+                    painter = painterResource(R.drawable.profile_placeholder_img),
                     contentDescription = null,
                     modifier = Modifier
                         .size(48.dp)
@@ -341,7 +341,7 @@ fun HomeScreen(navHostController: NavHostController, signUpScreenViewModel: Sign
             }
 
             //categories section
-            CategoriesRow(categories)
+            CategoriesRow(categories,navHostController)
 
 
         }

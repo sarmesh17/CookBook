@@ -1,5 +1,6 @@
 package uk.ac.tees.mad.d3812242.presentation.ui.homescreen.categoriesrow
 
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,29 +21,25 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
-import androidx.compose.animation.core.Animatable
-import androidx.compose.foundation.layout.offset
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.graphics.Color
 import uk.ac.tees.mad.d3812242.R
+import uk.ac.tees.mad.d3812242.presentation.navigation.Routes
 
 @Composable
-fun CategoriesRow(categories: List<Category>) {
+fun CategoriesRow(categories: List<Category>, navHostController: NavHostController) {
 
     val poppinsFontFamily = FontFamily(
         Font(resId = R.font.poppins_semibold)
@@ -64,13 +62,15 @@ fun CategoriesRow(categories: List<Category>) {
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
             items(categories) { category ->
-                CategoryCard(category.title, category.imageRes)
+                CategoryCard(category.title, category.imageRes, navHostController)
+
             }
         }
     }
 }
+
 @Composable
-fun CategoryCard(title: String, imageRes: Int) {
+fun CategoryCard(title: String, imageRes: Int, navHostController: NavHostController) {
     val imageOffsetY = remember { Animatable(0f) }
     val textOffsetY = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
@@ -94,6 +94,16 @@ fun CategoryCard(title: String, imageRes: Int) {
                             targetValue = 200f, // Move text down
                             animationSpec = tween(durationMillis = 500)
                         )
+                    }
+
+                    if (title == "Vegetarian") {
+                        navHostController.navigate(Routes.VegListScreen)
+                    } else if (title == "Beef") {
+
+                        navHostController.navigate(Routes.BeefListScreen)
+                    } else if (title == "Chicken") {
+
+                        navHostController.navigate(Routes.ChickenScreenList)
                     }
                 }
             },
@@ -125,7 +135,6 @@ fun CategoryCard(title: String, imageRes: Int) {
         }
     }
 }
-
 
 
 // Category data class remains the same
