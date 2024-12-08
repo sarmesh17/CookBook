@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
         FirebaseApp.initializeApp(this)
         setContent {
             CookBookTheme {
-                CookBookComposableNavigationSystem(context = this,recipeViewModel)
+                CookBookComposableNavigationSystem(context = this)
 
             }
         }

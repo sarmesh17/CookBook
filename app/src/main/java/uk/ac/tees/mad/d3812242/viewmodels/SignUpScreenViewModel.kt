@@ -47,6 +47,8 @@ class SignUpScreenViewModel @Inject constructor(
 
     var username by mutableStateOf<String?>(null)
         private set
+    var email by mutableStateOf<String?>(null)
+        private set
 
     fun fetchUsername() {
         val userId = firebaseAuth.currentUser?.uid
@@ -54,6 +56,7 @@ class SignUpScreenViewModel @Inject constructor(
             rootReference.child("users").child(userId).get().addOnSuccessListener { snapshot ->
                 val user = snapshot.getValue(User::class.java)
                 username = user?.username
+                email = user?.email
             }.addOnFailureListener { exception ->
                 Log.e("FetchUsername", "Error fetching username: ${exception.message}")
             }
